@@ -1,0 +1,35 @@
+---
+- title: usuário não existe
+  payload:
+    email: 404@gmail.com
+    password: '1232'
+  code: 401
+  error: Unauthorized
+- title: email em branco
+  payload:
+    email: ''
+    password: '1232'
+  code: 412
+  error: required email
+- title: sem o campo email
+  payload:
+    password: '1232'
+  code: 412
+  error: required email
+- title: senha incorreta
+  payload:
+    email: oliveira@gmail.com
+    password: '1232'
+  code: 401
+  error: Unauthorized
+- title: senha em branco
+  payload:
+    email: oliveira@gmail.com
+    password: ''
+  code: 412
+  error: required password
+- title: sem o campo senha
+  payload:
+    email: oliveira@gmail.com
+  code: 412
+  error: required password
