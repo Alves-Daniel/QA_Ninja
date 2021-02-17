@@ -3,23 +3,25 @@ require "mongo"
 Mongo::Logger.logger = Logger.new("./logs/mong.log")
 
 class MongoDB
-  def remove_user(email)
+  attr_accessor :users, :equipos
+
+  def initialize
     client = Mongo::Client.new("mongodb://rocklov-db:27017/rocklov")
-    users = client[:users]
-    users.delete_many({ email: email })
+    @users = client[:users]
+    @equipos = client[:equipos]
+  end
+
+  def remove_user(email)
+    @users.delete_many({ email: email })
   end
 
   def get_user(email)
-    client = Mongo::Client.new("mongodb://rocklov-db:27017/rocklov")
-    users = client[:users]
-    user = users.find({ email: email }).first
+    user = @users.find({ email: email }).frist
     return user[:_id]
   end
 
-  def remove_equipo(name, email)
-    user_id = get_user(email)
-    client = Mongo::Client.new("mongodb://rocklov-db:27017/rocklov")
-    equipos = client[:equipos]
-    equipos.delete_many({ name: name, user: user_id })
+  def remove_equipo(name, user_id)
+    obj_id = BSON::ObjectId.from_string(user_id)
+    @equipos.delete_many({ name: name, user: obj_id })
   end
 end

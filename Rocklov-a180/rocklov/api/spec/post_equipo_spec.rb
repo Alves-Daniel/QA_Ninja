@@ -7,7 +7,7 @@ describe "POST /equipos" do
 
   context "novo equipo" do
     before(:all) do
-      thumbnail = File.open(File.join(Dir.pwd, "spec/fixtures/images", "kramer.jpg"))
+      thumbnail = File.open(File.join(Dir.pwd, "spec/fixtures/images", "kramer.jpg"), "rb")
 
       payload = {
         thumbnail: thumbnail,
@@ -15,6 +15,8 @@ describe "POST /equipos" do
         category: "Cordas",
         price: 299,
       }
+
+      MongoDB.new.remove_equipo(payload[:name], @user_id)
 
       @result = Equipos.new.create(payload, @user_id)
     end
