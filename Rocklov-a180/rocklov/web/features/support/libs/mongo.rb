@@ -3,10 +3,10 @@ require "mongo"
 Mongo::Logger.logger = Logger.new("./logs/mong.log")
 
 class MongoDB
-  attr_acessor :users, :equipos
+  attr_accessor :users, :equipos
 
   def initialize
-    client = Mongo::client.new("mongodb://rocklov-db:27017/rocklov")
+    client = Mongo::Client.new("mongodb://rocklov-db:27017/rocklov")
     @users = client[:users]
     @equipos = client[:equipos]
   end
